@@ -11,11 +11,11 @@
     * Bone: `#F0F0F0`
 
 ## 2. Asset Mapping
-* First Rumor -> `/public/parfum/scandalea/1.jpeg`
-* Velvet Paradox -> `/public/parfum/scandalea/2.jpeg`
-* Rouge Impact -> `/public/parfum/scandalea/3.jpeg`
-* Naked Truth -> `/public/parfum/scandalea/4.jpeg`
-* Narcotic Flower -> `/public/parfum/scandalea/5.jpeg`
+* Ascension -> `/public/parfum/scandalea/ascension.jpeg`
+* Gourmet -> `/public/parfum/scandalea/gourmet.jpeg`
+* Misfit -> `/public/parfum/scandalea/misfit.jpeg`
+* Red Handed -> `/public/parfum/scandalea/redhanded.jpeg`
+* Violet & Moss -> `/public/parfum/scandalea/violet&moss.jpeg`
 * Logo Asset -> `/public/parfum/scandalea/scandalea-logo.png`
 
 ## 3. Component Architecture
