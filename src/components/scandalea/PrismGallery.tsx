@@ -17,9 +17,10 @@ export const PrismGallery = () => {
 
         panels.forEach((panel: HTMLDivElement | null, i: number) => {
             if (!panel) return;
-            const color = SCANDALEA_PRODUCTS[i].color;
+            const product = SCANDALEA_PRODUCTS[i];
+            const bgValue = product.gradient || product.color;
 
-            // Change background color when this panel enters center view
+            // Change background color/gradient when this panel enters center view
             ScrollTrigger.create({
                 trigger: panel,
                 start: "top center",
@@ -27,7 +28,8 @@ export const PrismGallery = () => {
                 onToggle: (self: ScrollTrigger) => {
                     if (self.isActive) {
                         gsap.to("body", {
-                            backgroundColor: color, // We can animate the body or a fixed background layer with an ID
+                            backgroundImage: bgValue.includes("gradient") ? bgValue : "none",
+                            backgroundColor: bgValue.includes("gradient") ? "#000" : bgValue,
                             duration: 1.0,
                             overwrite: "auto"
                         });
@@ -48,25 +50,25 @@ export const PrismGallery = () => {
                 <div
                     key={product.id}
                     ref={(el: HTMLDivElement | null) => { panelsRef.current[index] = el; }}
-                    className="h-screen w-full flex flex-col md:flex-row snap-start snap-always overflow-hidden"
+                    className="h-screen w-full flex flex-col md:flex-row snap-start snap-always overflow-hidden border-b border-white/5"
                 >
                     {/* Story / Left */}
-                    <div className="w-full md:w-1/4 flex items-center justify-center p-8 bg-black/20 backdrop-blur-sm">
-                        <div className="text-white">
-                            <h2 className="text-4xl md:text-6xl font-serif mb-4 opacity-0 animate-in slide-in-from-left duration-1000 fill-mode-forwards" style={{ animationDelay: '0.2s' }}>
-                                {product.id === "ascension" ? "01" :
-                                    product.id === "gourmet" ? "02" :
-                                        product.id === "misfit" ? "03" :
-                                            product.id === "redhanded" ? "04" : "05"}
+                    <div className="w-full md:w-1/4 flex flex-col items-center justify-center p-8 bg-black/20 backdrop-blur-sm z-10">
+                        <div className="text-white text-center md:text-left">
+                            <h2 className="text-6xl md:text-8xl font-serif mb-4 opacity-50 text-white/10 font-bold select-none absolute top-4 left-4 md:static">
+                                {(index + 1).toString().padStart(2, '0')}
                             </h2>
-                            <p className="text-xl uppercase tracking-widest font-light">{product.tagline}</p>
+                            <p className="text-sm md:text-base tracking-[0.2em] font-light text-scandalea-gold mb-2">{product.vibe.toUpperCase()}</p>
+                            <h3 className="text-2xl md:text-3xl font-serif mb-2">{product.name}</h3>
+                            <p className="text-xs md:text-sm uppercase tracking-widest font-light text-gray-400 mb-6">{product.tagline}</p>
+                            <p className="text-sm text-gray-300 italic max-w-xs">{product.description}</p>
                         </div>
                     </div>
 
                     {/* Image / Center */}
-                    <div className="w-full md:w-1/2 relative h-1/2 md:h-full group">
-                        <div className="absolute inset-0 flex items-center justify-center p-10 transition-transform duration-700 hover:scale-105">
-                            <div className="relative w-full h-full max-w-lg max-h-lg drop-shadow-2xl">
+                    <div className="w-full md:w-1/2 relative h-[50vh] md:h-full group order-first md:order-none">
+                        <div className="absolute inset-0 flex items-center justify-center p-6 md:p-14 transition-transform duration-700 hover:scale-105">
+                            <div className="relative w-full h-full max-w-lg drop-shadow-2xl">
                                 <Image
                                     src={product.image}
                                     alt={product.name}
@@ -79,11 +81,24 @@ export const PrismGallery = () => {
                     </div>
 
                     {/* Notes / Right */}
-                    <div className="w-full md:w-1/4 flex items-center justify-center p-8 bg-black/20 backdrop-blur-sm">
-                        <div className="text-right">
-                            <h3 className="text-3xl font-serif text-white mb-2">{product.name}</h3>
-                            <div className="h-px w-24 bg-white/50 ml-auto mb-4"></div>
-                            <p className="text-sm uppercase tracking-wider text-gray-200">{product.notes}</p>
+                    <div className="w-full md:w-1/4 flex items-center justify-center p-8 bg-black/20 backdrop-blur-sm z-10">
+                        <div className="text-center md:text-right w-full">
+                            <h4 className="text-lg font-serif text-white mb-6 border-b border-white/20 pb-2 inline-block">OLFACTORY NOTES</h4>
+
+                            <div className="space-y-6 text-sm text-gray-200">
+                                <div>
+                                    <span className="text-xs text-scandalea-gold uppercase tracking-wider block mb-1">Top</span>
+                                    <span>{product.notes.top}</span>
+                                </div>
+                                <div>
+                                    <span className="text-xs text-scandalea-gold uppercase tracking-wider block mb-1">Heart</span>
+                                    <span>{product.notes.heart}</span>
+                                </div>
+                                <div>
+                                    <span className="text-xs text-scandalea-gold uppercase tracking-wider block mb-1">Base</span>
+                                    <span>{product.notes.base}</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
