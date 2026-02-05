@@ -2,29 +2,43 @@
 
 import React from "react";
 import Image from "next/image";
-import { cn } from "@/lib/utils";
 
 export const Navbar = () => {
     return (
-        <nav className="fixed top-0 left-0 w-full z-50 px-6 py-4 flex justify-between items-center bg-black/10 backdrop-blur-md border-b border-white/5 transition-all duration-300">
-            <div className="flex items-center gap-4">
-                {/* Logo Slot - Initially hidden, target for Hero animation */}
-                <div id="navbar-logo-slot" className="relative w-10 h-10 opacity-0 overflow-hidden">
+        <nav className="fixed top-0 left-0 w-full z-50 px-8 py-5 flex justify-between items-center bg-black/10 backdrop-blur-md border-b border-white/5 transition-all duration-300">
+            {/* Left Area - Logo Slot / Branding */}
+            <div className="flex items-center gap-6">
+                {/* 
+                   THE SLOT: 
+                   This is the destination for the Hero Logo animation.
+                   It must have an ID for GSAP to calculate coordinates.
+                   Opacity 0 because the visual logo traveling here comes from the Hero component.
+                   We reveal this one only when the transition is complete.
+                */}
+                <div id="navbar-logo-slot" className="relative w-32 h-12 opacity-0">
                     <Image
                         src="/parfum/scandalea/scandalea-logo.png"
                         alt="Scandalea Mini Logo"
                         fill
-                        className="object-contain filter sepia(1) brightness-50 contrast-100 hue-rotate(5deg) saturate-[3]"
-                        style={{ filter: "invert(1) sepia(100%) saturate(10000%) hue-rotate(0deg) brightness(85%) contrast(110%)" }} // Attempting Gold filter
+                        className="object-contain"
+                        style={{
+                            filter: "brightness(0) invert(1) sepia(1) saturate(10000%) hue-rotate(45deg)" // Gold
+                        }}
                     />
                 </div>
-                <span className="text-xl font-serif text-scandalea-gold tracking-widest uppercase">Scandalea</span>
             </div>
 
-            <div className="flex gap-8 text-sm uppercase tracking-widest text-gray-300">
-                <a href="#" className="hover:text-scandalea-gold transition-colors">Collection</a>
-                <a href="#" className="hover:text-scandalea-gold transition-colors">Philosophy</a>
-                <a href="#" className="hover:text-scandalea-gold transition-colors">Contact</a>
+            {/* Right Area - Links */}
+            <div className="hidden md:flex gap-8 text-sm uppercase tracking-[0.2em] text-white font-light">
+                <a href="#collection" className="hover:text-scandalea-gold transition-colors duration-300">Collection</a>
+                <a href="#story" className="hover:text-scandalea-gold transition-colors duration-300">Story</a>
+                <a href="#cart" className="hover:text-scandalea-gold transition-colors duration-300">Cart (0)</a>
+            </div>
+
+            {/* Mobile Menu Icon (Simple) */}
+            <div className="md:hidden text-white cursor-pointer">
+                <span className="block w-6 h-px bg-white mb-1"></span>
+                <span className="block w-6 h-px bg-white"></span>
             </div>
         </nav>
     );

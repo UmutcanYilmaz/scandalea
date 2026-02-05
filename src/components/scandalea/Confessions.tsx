@@ -8,87 +8,54 @@ gsap.registerPlugin(ScrollTrigger);
 
 export const Confessions = () => {
     const containerRef = useRef<HTMLDivElement>(null);
-    const lineRef = useRef<HTMLDivElement>(null);
-    const textRefs = useRef<(HTMLParagraphElement | HTMLHeadingElement | null)[]>([]);
+    const textRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        // Animate Text Lines
-        textRefs.current.forEach((el, index) => {
-            if (!el) return;
-            gsap.fromTo(el,
-                { opacity: 0, y: 30, filter: "blur(10px)" },
-                {
-                    opacity: 1,
-                    y: 0,
-                    filter: "blur(0px)",
-                    duration: 1.2,
-                    ease: "power3.out",
-                    scrollTrigger: {
-                        trigger: el,
-                        start: "top 85%",
-                        toggleActions: "play none none reverse"
-                    },
-                    delay: index * 0.2
-                }
-            );
+        const textElement = textRef.current;
+        if (!textElement) return;
+
+        // Split text into words manually to avoid extra dependencies like SplitText (which is premium)
+        // or just use spans.
+        const words = textElement.innerText.split(" ");
+        textElement.innerHTML = "";
+        words.forEach((word) => {
+            const span = document.createElement("span");
+            span.innerText = word + " "; // Add space back
+            span.style.display = "inline-block";
+            span.style.opacity = "0";
+            span.style.transform = "translateY(20px)";
+            textElement.appendChild(span);
         });
 
-        // Animate Vertical Line
-        if (lineRef.current) {
-            gsap.fromTo(lineRef.current,
-                { height: "0%" },
-                {
-                    height: "100px", // Grow to fixed height
-                    duration: 1.5,
-                    ease: "power2.inOut",
-                    scrollTrigger: {
-                        trigger: containerRef.current,
-                        start: "center 70%",
-                        scrub: 1
-                    }
-                }
-            );
-        }
+        const spans = textElement.querySelectorAll("span");
+
+        gsap.to(spans, {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: "back.out(1.7)",
+            scrollTrigger: {
+                trigger: containerRef.current,
+                start: "center 75%",
+                toggleActions: "play none none reverse"
+            }
+        });
+
     }, []);
 
     return (
         <section
             ref={containerRef}
-            className="min-h-[60vh] flex flex-col items-center justify-center px-6 py-20 text-center relative z-20"
-            style={{ backgroundColor: '#0a0505' }} // Slightly lighter than pure black
+            className="h-[50vh] flex items-center justify-center bg-black px-6 relative z-20"
         >
-            <div className="max-w-3xl space-y-12 flex flex-col items-center">
-
+            <div className="max-w-4xl">
                 <h2
-                    ref={(el) => { textRefs.current[0] = el; }}
-                    className="text-3xl md:text-5xl font-serif text-white leading-tight"
+                    ref={textRef}
+                    className="text-3xl md:text-5xl font-serif text-[#D4AF37] text-center italic leading-relaxed"
                 >
-                    "Bir kadın odaya girdiğinde sessizlik olmamalı."
+                    Bir kadın odaya girdiğinde sessizlik olmamalı. Fısıltılar başlamalı.
                 </h2>
-
-                <h2
-                    ref={(el) => { textRefs.current[1] = el; }}
-                    className="text-3xl md:text-5xl font-serif text-scandalea-gold leading-tight italic"
-                >
-                    Fısıltılar başlamalı.
-                </h2>
-
-                <p
-                    ref={(el) => { textRefs.current[2] = el; }}
-                    className="text-xl md:text-2xl font-light text-gray-400"
-                >
-                    Biz, unutulmaya değil, olay yaratmaya geldik.
-                </p>
-
-                {/* Vertical Gold Line */}
-                <div className="relative h-32 w-full flex justify-center mt-8">
-                    <div
-                        ref={lineRef}
-                        className="w-px bg-scandalea-gold shadow-[0_0_10px_#D4AF37]"
-                        style={{ height: '0px' }}
-                    ></div>
-                </div>
-
             </div>
         </section>
     );

@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/scandalea/Navbar";
 import { Hero } from "@/components/scandalea/Hero";
+import { Confessions } from "@/components/scandalea/Confessions";
 import { PrismGallery } from "@/components/scandalea/PrismGallery";
 
 export default function ScandaleaPage() {
@@ -7,6 +8,7 @@ export default function ScandaleaPage() {
         <main className="min-h-screen bg-black text-white selection:bg-scandalea-gold selection:text-black">
             <Navbar />
             <Hero />
+            <Confessions />
             <PrismGallery />
         </main>
     );
