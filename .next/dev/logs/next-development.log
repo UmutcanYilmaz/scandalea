@@ -1,0 +1,8 @@
+[00:00:00.407] Server  LOG     ✓ Ready in 267ms
+[00:00:01.356] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:03.544] Browser WARN    Image with src "/parfum/scandalea/ascension.jpeg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:00:03.544] Browser WARN    Image with src "/parfum/scandalea/redhanded.jpeg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:00:03.544] Browser WARN    Image with src "/parfum/scandalea/scandalea-logo.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:00:10.936] Browser WARN    Image with src "/parfum/scandalea/violet&moss.jpeg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:00:11.338] Browser WARN    Image with src "/parfum/scandalea/misfit.jpeg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:00:11.837] Browser WARN    Image with src "/parfum/scandalea/gourmet.jpeg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
