@@ -15,44 +15,38 @@ export const PrismGallery = () => {
     useEffect(() => {
         const panels = panelsRef.current;
 
-        panels.forEach((panel) => {
+        panels.forEach((panel, i) => {
             if (!panel) return;
 
-            // Animation for elements within the card when it comes into view
             const q = gsap.utils.selector(panel);
             const img = q(".product-image");
             const text = q(".product-text");
+            const number = q(".index-number");
 
-            gsap.fromTo(img,
-                { scale: 0.8, opacity: 0.8 },
-                {
-                    scale: 1,
-                    opacity: 1,
-                    duration: 1,
-                    ease: "power2.out",
-                    scrollTrigger: {
-                        trigger: panel,
-                        start: "top center+=100",
-                        toggleActions: "play reverse play reverse"
-                    }
+            // Entrance animation for each sticky card
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: panel,
+                    start: "top center", // Activate when top of card hits center
+                    end: "bottom center",
+                    toggleActions: "play reverse play reverse"
                 }
-            );
+            });
 
-            gsap.fromTo(text,
-                { y: 50, opacity: 0 },
-                {
-                    y: 0,
-                    opacity: 1,
-                    duration: 1,
-                    stagger: 0.1,
-                    ease: "power3.out",
-                    scrollTrigger: {
-                        trigger: panel,
-                        start: "top center+=100",
-                        toggleActions: "play reverse play reverse"
-                    }
-                }
-            );
+            tl.fromTo(img,
+                { scale: 0.8, opacity: 0, rotation: 5 },
+                { scale: 1, opacity: 1, rotation: 0, duration: 1, ease: "power3.out" }
+            )
+                .fromTo(text,
+                    { y: 30, opacity: 0 },
+                    { y: 0, opacity: 1, stagger: 0.1, duration: 0.8, ease: "power2.out" },
+                    "-=0.5"
+                )
+                .fromTo(number,
+                    { opacity: 0, x: -50 },
+                    { opacity: 0.2, x: 0, duration: 1 },
+                    "-=0.8"
+                );
         });
 
         return () => {
@@ -66,63 +60,73 @@ export const PrismGallery = () => {
                 <section
                     key={product.id}
                     ref={(el) => { panelsRef.current[index] = el; }}
-                    className="h-screen sticky top-0 flex items-center justify-center overflow-hidden border-t border-white/10"
+                    className="h-screen sticky top-0 flex items-center justify-center overflow-hidden border-t border-white/5 shadow-2xl"
                     style={{
-                        background: `radial-gradient(circle at center, ${product.color}20 0%, #000000 90%)`,
-                        zIndex: index + 1 // Ensure stacking order
+                        background: `radial-gradient(circle at 50% 50%, ${product.color}15 0%, #050505 80%)`,
+                        zIndex: index + 1
                     }}
                 >
-                    {/* Content Container - Split Screen */}
-                    <div className="w-full max-w-7xl mx-auto px-6 h-full flex flex-col md:flex-row items-center justify-between">
+                    {/* Background Index Number */}
+                    <div className="absolute top-10 left-10 text-[20vw] font-serif text-white opacity-0 index-number leading-none select-none pointer-events-none">
+                        0{index + 1}
+                    </div>
 
-                        {/* Left: Text & Story */}
-                        <div className="w-full md:w-1/3 text-center md:text-left space-y-6 z-10 product-text">
-                            <h2 className="text-6xl md:text-8xl font-serif text-white leading-none">
-                                {product.name.split(' ').map((word, i) => (
-                                    <span key={i} className="block">{word}</span>
-                                ))}
+                    <div className="w-full max-w-7xl mx-auto px-6 h-full flex flex-col md:flex-row items-center justify-between relative z-10">
+
+                        {/* Left: Text */}
+                        <div className="w-full md:w-1/3 text-center md:text-left space-y-6 select-none">
+                            <h2 className="text-6xl md:text-8xl font-serif text-white leading-none tracking-tighter mix-blend-difference product-text">
+                                {product.name}
                             </h2>
-                            <p className="text-xl italic text-white/70 font-serif">"{product.tagline}"</p>
-                            <div className="w-12 h-px bg-scandalea-gold my-4 mx-auto md:mx-0"></div>
-                            <p className="text-sm md:text-base text-gray-400 max-w-sm mx-auto md:mx-0 leading-relaxed">
+                            <p className="text-2xl italic text-scandalea-gold font-serif product-text">"{product.tagline}"</p>
+
+                            <div className="hidden md:block w-16 h-px bg-white/20 my-6 product-text" />
+
+                            <p className="text-sm text-gray-400 max-w-sm leading-relaxed product-text">
                                 {product.description}
                             </p>
                         </div>
 
                         {/* Center: Image */}
-                        <div className="relative w-[300px] h-[400px] md:w-[50vh] md:h-[70vh] flex-shrink-0 z-20 my-8 md:my-0 product-image">
+                        <div className="relative w-[60vw] h-[50vh] md:w-[30vw] md:h-[70vh] flex-shrink-0 my-8 md:my-0 product-image">
+                            <div className="absolute inset-0 bg-radial-gradient from-white/10 to-transparent blur-2xl transform scale-75" />
                             <Image
                                 src={product.image}
                                 alt={product.name}
                                 fill
-                                className="object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+                                sizes="(max-width: 768px) 60vw, 30vw"
+                                className="object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.8)]"
                                 priority={index < 2}
                             />
                         </div>
 
                         {/* Right: Notes */}
-                        <div className="w-full md:w-1/3 text-center md:text-right space-y-8 z-10 product-text">
-                            <div>
-                                <h4 className="text-xs uppercase tracking-[0.3em] text-scandalea-gold mb-2">Top Notes</h4>
-                                <p className="text-lg text-white font-light">{product.notes.top}</p>
+                        <div className="w-full md:w-1/3 text-center md:text-right space-y-8 select-none">
+                            <div className="product-text">
+                                <h4 className="text-[10px] uppercase tracking-[0.3em] text-neutral-500 mb-2">Top Notes</h4>
+                                <p className="text-xl text-white font-serif">{product.notes.top}</p>
                             </div>
-                            <div>
-                                <h4 className="text-xs uppercase tracking-[0.3em] text-scandalea-gold mb-2">Heart Notes</h4>
-                                <p className="text-lg text-white font-light">{product.notes.heart}</p>
+                            <div className="product-text">
+                                <h4 className="text-[10px] uppercase tracking-[0.3em] text-neutral-500 mb-2">Heart Notes</h4>
+                                <p className="text-xl text-white font-serif">{product.notes.heart}</p>
                             </div>
-                            <div>
-                                <h4 className="text-xs uppercase tracking-[0.3em] text-scandalea-gold mb-2">Base Notes</h4>
-                                <p className="text-lg text-white font-light">{product.notes.base}</p>
+                            <div className="product-text">
+                                <h4 className="text-[10px] uppercase tracking-[0.3em] text-neutral-500 mb-2">Base Notes</h4>
+                                <p className="text-xl text-white font-serif">{product.notes.base}</p>
+                            </div>
+
+                            <div className="product-text pt-8">
+                                <button className="px-8 py-3 border border-white/20 text-white hover:bg-white hover:text-black transition-all duration-500 uppercase tracking-widest text-xs group">
+                                    <span className="group-hover:mr-2 transition-all">Acquire</span>
+                                    <span className="opacity-0 group-hover:opacity-100 transition-all">→</span>
+                                </button>
                             </div>
                         </div>
 
                     </div>
                 </section>
             ))}
-
-            {/* Spacer for last item to be fully scrollable if needed, though sticky handles it well usually. 
-                With sticky cards, the container height is controlled by content flow. 
-            */}
         </div>
     );
 };
+

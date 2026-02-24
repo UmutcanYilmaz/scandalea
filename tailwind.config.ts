@@ -10,22 +10,36 @@ const config: Config = {
         extend: {
             colors: {
                 scandalea: {
-                    gold: "#D4AF37",
-                    crimson: "#D70040",
-                    amber: "#C68E17",
-                    violet: "#4B0082",
-                    silver: "#E0E0E0",
-                    dark: "#0a0a0a",
-                },
-                backgroundImage: {
-                    "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-                    "gradient-conic":
-                        "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+                    gold: "#D4AF37",         // Classic Gold
+                    "gold-light": "#F1DFA0", // Pale Gold / Champagne
+                    "gold-dark": "#AA8218",  // Antique Gold
+                    crimson: "#9A0000",      // Deep Blood Red
+                    obsidian: "#050505",     // Richer Black
+                    charcoal: "#121212",     // Soft Black
+                    silver: "#C0C0C0",
                 },
             },
             fontFamily: {
                 sans: ['var(--font-inter)'],
                 serif: ['var(--font-playfair)'],
+            },
+            backgroundImage: {
+                "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+                "gradient-gold": "linear-gradient(135deg, #BF953F 0%, #FCF6BA 50%, #B38728 100%, #FBF5B7 150%)", // Metallic Gold
+            },
+            animation: {
+                "fade-in": "fadeIn 1s ease-out forwards",
+                "float": "float 6s ease-in-out infinite",
+            },
+            keyframes: {
+                fadeIn: {
+                    "0%": { opacity: "0" },
+                    "100%": { opacity: "1" },
+                },
+                float: {
+                    "0%, 100%": { transform: "translateY(0)" },
+                    "50%": { transform: "translateY(-10px)" },
+                }
             }
         },
     },
