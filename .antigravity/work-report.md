@@ -30,7 +30,27 @@
 - Verified the git remote configuration.
 
 ### Pending Pipeline
-- Perform subsequent development or push local modifications to the new origin repository.
+- None.
 
 ### Architectural Decisions
 - **Repository Association**: Re-associated the codebase with the existing `scandalea` repository to sync history and remote changes directly.
+
+## [2026-07-17T14:02:00+03:00] - History Alignment and Syncing
+
+### Completed Tasks
+- Configured `.gitignore` to exclude Next.js build cache (`.next/`), typescript build files (`.tsbuildinfo`), and environment parameters.
+- Untracked build-specific artifacts locally.
+- Performed a git fetch of the remote repository and executed an unrelated histories merge (`git merge origin/main --allow-unrelated-histories -X ours`) to preserve remote commits and legal timestamps without overwriting them.
+- Removed obsolete nested directories (`src/app/scandalea/` and `src/components/scandalea/`) that were recreated during the merge.
+- Verified compilation and types check using `pnpm build`.
+- Pushed the aligned branch commits to GitHub `origin/main`.
+
+### Active Workflows
+- Codebase fully synchronized and verified.
+
+### Pending Pipeline
+- Resume normal workspace development.
+
+### Architectural Decisions
+- **Non-Destructive History Alignment**: Chose to merge unrelated histories rather than force-pushing to preserve all legal timestamps and git commit records on `github.com/UmutcanYilmaz/scandalea`.
+- **Gitignore Hygiene**: Excluded next build artifacts from git history to avoid merge conflicts on build caches.
