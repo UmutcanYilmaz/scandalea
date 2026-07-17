@@ -19,3 +19,18 @@
 ### Architectural Decisions
 - **Route Flattening**: Replaced the redundant `/scandalea` route path to serve pages directly at the application root (`/` and `/product/[slug]`). This simplifies imports, routing logic, and improves URL readability.
 - **Component Relocation**: Flattened components out of a brand-specific subfolder (`scandalea/`) to standard workspace convention, retaining specific Canvas and Shaders subdirectories for readability.
+
+## [2026-07-17T13:48:00+03:00] - Repository Link Adjustment
+
+### Completed Tasks
+- Updated the local git remote `origin` configuration to point to `https://github.com/UmutcanYilmaz/scandalea.git` instead of `https://github.com/UmutcanYilmaz/scandalea-main.git`.
+- Searched codebase and documentation for hardcoded references to the old repository URL or repository name.
+
+### Active Workflows
+- Verified the git remote configuration.
+
+### Pending Pipeline
+- Perform subsequent development or push local modifications to the new origin repository.
+
+### Architectural Decisions
+- **Repository Association**: Re-associated the codebase with the existing `scandalea` repository to sync history and remote changes directly.
